@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="calendarMaker.js" > </script>
+    <link rel="stylesheet" href="style.css" />
+    <title>LCHS Go Daily Schedule Editor</title>
+  </head>
+  <body id = "body">
+        <div id = "scheduleIntro">
+          <h2>Schedule Creator</h2> 
+            <p id = "scheduleNum"> Schedule #1</p>
+            <label for="periods">Number of Periods:</label><br>
+            <input type="number" id="periods" name = "periods">
+            <button type="button" onclick="periodCount()">Enter</button>
+            <br>
+        </div>
+        <div id = "schedules">
+        </div>
+    <div id="scheduleSubmit">
+      <!-- Yes there are empty divs, they get populated by the JS, don't worry-->
+    </div>
+
+    <div id = "weeks">
+      <h2> Weeks creator</h2>
+      <label> Monday:</label><select id = "day1"> Monday</select>
+      <label> Tuesday:</label><select id = "day2"> </select>
+      <label> Wednesday:</label><select id = "day3"> </select>
+      <label> Thursday:</label><select id = "day4"> </select>
+      <label> Friday:</label><select id = "day5"> </select>
+      <label> Saturday:</label><select id = "day6"> </select>
+      <label> Sunday:</label><select id = "day7"> </select>
+    </div>
+
+    <div id = "console">
+        <h2> You're Done!</h2>
+        <p>Right click and press inspect, then copy  what appears in the "console" tab. Open a new text document and paste into it. Save as a file <!-- make a better thing here--> </p>
+      </div>
+      
+    <br>
+    <button type="button" onclick="toNext()" id = "nextB">Next</button>
+    
+  </body>
+</html>
