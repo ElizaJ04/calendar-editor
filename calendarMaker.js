@@ -91,7 +91,7 @@ for (i=1; i<=periods; i++)
 
 function submitSchedule()
 {
-    unpressed = false;
+    unpressed = true;
 
     var obj = {scheduleNumber: schedulesCreated, scheduleName: document.getElementById("scheduleName").value}
     for (i = 1; i <= numPeriods; i++) //does a loop to collect all inputs into an object
@@ -112,8 +112,7 @@ function submitSchedule()
     schedulesCreated++;
     document.getElementById("scheduleNum").innerHTML = "Schedule #" + schedulesCreated;
     document.getElementById("periods").value = "";
-    console.log(schedulesArray2D)
-    
+
     // create object with all values
 
 }
@@ -155,7 +154,6 @@ function populateWeeks()
         }
 
     }
-    console.log(document.getElementById("day6").value)
 
 }
 
@@ -168,16 +166,16 @@ function createObject()
     obj["schedule"+i]= schedulesArray2D[i];
     }
     
-    obj["monday"] =  document.getElementById("day1").scheduleName;
-    obj["tuesday"] =  document.getElementById("day2").scheduleName;
-    obj["wednesday"] =  document.getElementById("day3").scheduleName;
-    obj["thursday"] =  document.getElementById("day4").scheduleName;
-    obj["friday"] =  document.getElementById("day5").scheduleName;
-    obj["saturday"] =  document.getElementById("day6").scheduleName;
-    obj["sunday"] =  document.getElementById("day7").scheduleName;
-
+    obj["monday"] =  schedulesArray2D[document.getElementById("day1").value-1].scheduleName;
+    obj["tuesday"] =  schedulesArray2D[document.getElementById("day2").value-1].scheduleName;
+    obj["wednesday"] =  schedulesArray2D[document.getElementById("day3").value-1].scheduleName;
+    obj["thursday"] =  schedulesArray2D[document.getElementById("day4").value-1].scheduleName;
+    obj["friday"] =  schedulesArray2D[document.getElementById("day5").value-1].scheduleName;
+    obj["saturday"] =  schedulesArray2D[document.getElementById("day6").value-1].scheduleName;
+    obj["sunday"] = schedulesArray2D[document.getElementById("day7").value-1].scheduleName;
 
     console.log(obj)
+
     var dictstring = JSON.stringify(obj);
     console.log(dictstring)
 }
