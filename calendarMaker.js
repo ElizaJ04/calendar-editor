@@ -161,8 +161,10 @@ function populateWeeks()
 
 function createObject()
 {
+    obj = {}
     for (i = 0; i < schedulesArray2D.length; i++)
     {
+
     obj["schedule"+i]= schedulesArray2D[i];
     }
     
