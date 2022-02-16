@@ -168,13 +168,13 @@ function createObject()
     obj["schedule"+i]= schedulesArray2D[i];
     }
     
-    obj["monday"] =  getElementById("day1").scheduleName;
-    obj["tuesday"] =  getElementById("day2").scheduleName;
-    obj["wednesday"] =  getElementById("day3").scheduleName;
-    obj["thursday"] =  getElementById("day4").scheduleName;
-    obj["friday"] =  getElementById("day5").scheduleName;
-    obj["saturday"] =  getElementById("day6").scheduleName;
-    obj["sunday"] =  getElementById("day7").scheduleName;
+    obj["monday"] =  document.getElementById("day1").scheduleName;
+    obj["tuesday"] =  document.getElementById("day2").scheduleName;
+    obj["wednesday"] =  document.getElementById("day3").scheduleName;
+    obj["thursday"] =  document.getElementById("day4").scheduleName;
+    obj["friday"] =  document.getElementById("day5").scheduleName;
+    obj["saturday"] =  document.getElementById("day6").scheduleName;
+    obj["sunday"] =  document.getElementById("day7").scheduleName;
 
 
     console.log(obj)
