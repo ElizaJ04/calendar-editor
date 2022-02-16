@@ -4,6 +4,7 @@ schedulesArray2D = [
 numPeriods = 0;
 schedulesCreated = 1;
 page = 0;
+unpressed = true;
 setTimeout(() => {  //inital setup, waits 30ms for everything to load first
     
     
@@ -19,9 +20,9 @@ setTimeout(() => {  //inital setup, waits 30ms for everything to load first
 
 function periodCount(){
     var NumPeriods = document.getElementById('periods').value //figures out how many periods, sends it along
-    if (NumPeriods > 0)
+    if (NumPeriods > 0 && unpressed)
     {
-
+    unpressed = false;
     numPeriods = NumPeriods; //i wanted it to be local but its global so sad
     //creates a submit b
     
@@ -90,6 +91,7 @@ for (i=1; i<=periods; i++)
 
 function submitSchedule()
 {
+    unpressed = false;
 
     var obj = {scheduleNumber: schedulesCreated, scheduleName: document.getElementById("scheduleName").value}
     for (i = 1; i <= numPeriods; i++) //does a loop to collect all inputs into an object
@@ -174,101 +176,3 @@ function createObject()
 }
 
 
-
-//planning
-/*
-
-figure out a way to make it so the last time doesn't show up when trying to go to next item
-
-*/
-
-
-
-
-// the idea of a month long system will be implemented by someone else once the application actually becomes compatable with it
-
-
-
-
-// old code I am keeping to use when useful 
-/*
-eventArray = []
-window.onload = function(){
-    const form = document.querySelector('form')
-    form.addEventListener('submit', event => {
-      // submit event detected
-      event.preventDefault()
-      printRes()
-      updatePage()
-
-    })
-};
-function printRes()
-{
-var date = parseInt(document.getElementById("date").value)
-//console.log(date)
-pos = dateArray.indexOf(date)
-if (pos != -1)
-{
-    console.log("found")
-    dateArray.splice(pos,1);
-    eventArray.splice(pos,1);
-}
-if (date <= 31 && date > 0)
-    dateArray.push(date)
-//console.log(dateArray)
-
-var event = document.getElementById("title").value
-//console.log(event)
-if (date <= 31 && date > 0)
-    eventArray.push(event)
-//console.log(eventArray)
-}
-function updatePage()
-{
-    var dateString = "";
-    for (var i = 0; i < dateArray.length; i++)
-    {
-
-        console.log(dateArray)
-        dateString += dateArray[i] + ": " + eventArray[i] + "<br>";
-    }
-    document.getElementById("day").innerHTML = dateString;
-    console.log("test")
-}
-
-function createFile()
-{
-    const d = new Date();
-    var day = d.getDate();
-    var month =(d.getMonth() + 1) * 100
-    var year = d.getFullYear()*10000
-    version = day + month + year;
-    version /= 10000
-    // version 
-    console.log(version)
-
-
-    obj["version"] = version;
-    //console.log(obj);
-    for (var i = 1; i <= 31; i++)
-    {
-        var index = dateArray.indexOf(i);
-        if (index > -1)
-        {
-           obj[i] = eventArray[index] 
-           //console.log("found")
-        }
-    }
-
-
-
-    var dictstring = JSON.stringify(obj);
-    console.log(dictstring)
-    //var fs = require('fs');
-    //fs.writeFile("events.json", dictstring, function(err, result) {
-    //if(err) console.log('error', err);
-//});
-}
-
-*/
