@@ -161,15 +161,20 @@ function populateWeeks()
 
 function createObject()
 {
-    obj = {
-        monday: schedulesArray2D[document.getElementById("day1").value - 1],
-        tuesday: schedulesArray2D[document.getElementById("day2").value - 1],
-        wednesday: schedulesArray2D[document.getElementById("day3").value - 1],
-        thursday: schedulesArray2D[document.getElementById("day4").value -1],
-        friday: schedulesArray2D[document.getElementById("day5").value -1],
-        saturday: schedulesArray2D[document.getElementById("day6").value -1],
-        sunday: schedulesArray2D[document.getElementById("day7").value -1]
+    for (i = 0; i < schedulesArray2D.length; i++)
+    {
+    obj["schedule"+i]= schedulesArray2D[i];
     }
+    
+    obj["monday"] =  getElementById("day1").scheduleName;
+    obj["tuesday"] =  getElementById("day2").scheduleName;
+    obj["wednesday"] =  getElementById("day3").scheduleName;
+    obj["thursday"] =  getElementById("day4").scheduleName;
+    obj["friday"] =  getElementById("day5").scheduleName;
+    obj["saturday"] =  getElementById("day6").scheduleName;
+    obj["sunday"] =  getElementById("day7").scheduleName;
+
+
     console.log(obj)
     var dictstring = JSON.stringify(obj);
     console.log(dictstring)
