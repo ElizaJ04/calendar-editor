@@ -9,6 +9,11 @@
     <title>LCHS Go Daily Schedule Editor</title>
   </head>
   <body id = "body">
+    <div id = "fileUpload">
+      <input type = "file" id = "file" accept=".json" onchange="fileUpload(this)">
+    </div>
+
+
         <div id = "scheduleIntro">
           <h2>Schedule Creator</h2> 
             <p id = "scheduleNum"> Schedule #1</p>
@@ -36,7 +41,8 @@
 
     <div id = "console">
         <h2> You're Done!</h2>
-        <p>Right click and press inspect, then copy  what appears in the "console" tab. Open a new text document and paste into it. Save as a file <!-- make a better thing here--> </p>
+        <p> If the file didn't dowload automatically, press the button. <!-- make a better thing here--> </p>
+        <button type = "button" onclick = "download('schedule.json', jsonDownload)"> Download File</button>
       </div>
       
     <br>

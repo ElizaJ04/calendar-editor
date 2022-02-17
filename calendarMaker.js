@@ -5,6 +5,8 @@ numPeriods = 0;
 schedulesCreated = 1;
 page = 0;
 unpressed = true;
+jsonUpload = "";
+jsonDownload = "";
 setTimeout(() => {  //inital setup, waits 30ms for everything to load first
     
     
@@ -116,7 +118,7 @@ function submitSchedule()
     // create object with all values
 
 }
-
+// controls the flow of the pages, so that loading is not necessary // 
 function toNext()
 {
     if (page == 0)
@@ -157,7 +159,7 @@ function populateWeeks()
 
 }
 
-function createObject()
+function createObject() // converts array that already exists into a json object
 {
     obj = {}
     for (i = 0; i < schedulesArray2D.length; i++)
@@ -176,8 +178,40 @@ function createObject()
 
     console.log(obj)
 
-    var dictstring = JSON.stringify(obj);
-    console.log(dictstring)
+    jsonDownload = JSON.stringify(obj);
+
+    download('schedule.json', jsonDownload);
+
 }
 
+// -- File upload -- //
 
+
+function fileUpload(file)
+{
+    var input = file.files[0]
+    //console.log(document.getElementById("test"))
+    const reader = new FileReader();
+    reader.readAsText(input);
+
+    reader.addEventListener('load', (e) => {
+        var data = JSON.parse(e.target.result);
+
+        jsonUpload = data;
+        console.log(data)
+    });
+}
+
+// trusting stack overflow... 
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }
