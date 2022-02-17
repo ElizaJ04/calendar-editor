@@ -9,7 +9,7 @@ jsonUpload = "";
 jsonDownload = "";
 fileUploaded = false;
 dayArray = []
-setTimeout(() => {  //inital setup, waits 30ms for everything to load first
+setTimeout(() => {  //inital setup, waits 30ms for everything to load first, hides all inactive items
     
     
     document.getElementById("weeks").style.display = "none"
@@ -27,12 +27,12 @@ setTimeout(() => {  //inital setup, waits 30ms for everything to load first
 
 
 function periodCount(){
-    var NumPeriods = document.getElementById('periods').value //figures out how many periods, sends it along
+    var NumPeriods = document.getElementById('periods').value //figures out how many periods, sends it along, checks to make sure it happens only once
     if (NumPeriods > 0 && unpressed)
     {
-    unpressed = false;
+    unpressed = false; 
     numPeriods = NumPeriods; //i wanted it to be local but its global so sad
-    //creates a submit b
+
     
    
     scheduleCreateor(NumPeriods)
@@ -56,29 +56,29 @@ for (i=1; i<=periods; i++)
     var period = document.createElement("div")
     period.id = "period" + i
 
-    // Aiden I need u to make this actually look good and not look weird when i > 10
+    // Aidan I need u to make this actually look good and not look weird when i > 10
 
     var startLabel = document.createElement("label")
     startLabel.innerHTML = "Period " + i + " start: "
     var startInput = document.createElement("input")
     startInput.id = "start" + i
-    startInput.type = "text"
+    startInput.type = "text" //creates an element for the start of period (input and label)
 
     var endLabel = document.createElement("label")
     endLabel.innerHTML = "Period " + i + " end: ";
     var endInput = document.createElement("input")
     endInput.id = "end" + i
-    endInput.type = "text"
+    endInput.type = "text" // creates an element for the end of period (input and label)
 
     var nameLabel = document.createElement("label")
     nameLabel.innerHTML = "Period " + i + " name:"
     var nameInput = document.createElement("input")
-    nameInput.id = "name"+i
+    nameInput.id = "name"+i // creates an element for the name of period (input and label)
 
 
 
 
-
+// adds all the created things to the webpage
     period.append(startLabel);
     period.append(startInput);
     period.append(endLabel);
@@ -99,7 +99,7 @@ for (i=1; i<=periods; i++)
 
 function submitSchedule()
 {
-    unpressed = true;
+    unpressed = true; //variable to allow new submittion of periods
 
     var obj = {scheduleNumber: schedulesCreated, scheduleName: document.getElementById("scheduleName").value}
     for (i = 1; i <= numPeriods; i++) //does a loop to collect all inputs into an object
@@ -108,7 +108,7 @@ function submitSchedule()
             periodStart: document.getElementById("start"+i).value,
             periodEnd: document.getElementById("end"+i).value,
             periodName: document.getElementById("name"+i).value
-        };
+        }; //creates an object with the period attributes
     
     }
     schedulesArray2D.push(obj) //adds schedule object to schedule array
@@ -124,10 +124,11 @@ function submitSchedule()
     // create object with all values
 
 }
-// controls the flow of the pages, so that loading is not necessary // 
+// controls the flow of the pages, so that loading is not necessary; shows and hides elements as appropriate // 
 function toNext()
 {
-    if (page == 0)
+    if (page == 0) //goes from file upload to schedule maker
+    {
         document.getElementById("scheduleIntro").style.display = "inline";
         document.getElementById("schedules").style.display = "inline";
         document.getElementById("scheduleSubmit").style.display = "inline";
@@ -138,7 +139,7 @@ function toNext()
         document.getElementById("scheduleNum").innerHTML = "Schedule #" + schedulesCreated;
         console.log(dayArray)
     }
-    if (page == 1)
+    if (page == 1) //goes from schedule maker to week maker
     {
         document.getElementById("scheduleIntro").style.display = "none";
         document.getElementById("schedules").style.display = "none";
@@ -147,7 +148,7 @@ function toNext()
         document.getElementById("nextB").innerHTML = "Finish"
         populateWeeks()
     }
-    else if (page == 2)
+    else if (page == 2) //goes from week maker to download
     {
         document.getElementById("weeks").style.display = "none";
         document.getElementById("console").style.display = "inline"
@@ -160,7 +161,7 @@ function toNext()
 }
 // ----- Week step ----- //
 
-function populateWeeks()
+function populateWeeks() //fills out the week thing
 {
     for (i = 1; i <= 7; i++)
     {
@@ -233,13 +234,13 @@ function fileUpload(file)
 }
 
 function fileParse(file, accept)
-{
-    for (const key in file) {
+{ 
+    for (const key in file) { //goes through each thing in the schedule object
 
-        if (file.hasOwnProperty(key)) {
-            if (typeof (file[key] == "object") && typeof (file[key]) != "string") 
+        if (file.hasOwnProperty(key)) { //checks to insure that it doesnt go through inheritied properties
+            if (typeof (file[key] == "object") && typeof (file[key]) != "string")  //checks to see if it's a schedule or a day
             {
-                if (accept)
+                if (accept) //checks if this is the array passthrough or the display passthrough
                 {
                     schedulesArray2D.push(file[key])
                     console.log(schedulesArray2D)
@@ -247,7 +248,7 @@ function fileParse(file, accept)
                 }
                 else{
 
-                    for (const be in file[key])
+                    for (const be in file[key]) 
                     {
                         if (be == "scheduleName")
                         {
@@ -265,22 +266,16 @@ function fileParse(file, accept)
                 }
             }
             else
-            {
+            { // if it is the days 
                 if (accept)
                 dayArray.push(file[key])
 
             }
                 
             
-            //check if it has a tag of schedule something
-    
         }
     }
 }
-
-
-
-
 // trusting stack overflow...  // 
 function download(filename, text) {
     var element = document.createElement('a');
