@@ -10,7 +10,9 @@
   </head>
   <body id = "body">
     <div id = "fileUpload">
+      <h2> Upload Already Existing Schedule</h2>
       <input type = "file" id = "file" accept=".json" onchange="fileUpload(this)">
+      <button type = "button" onclick = "location.reload()" id="twitter"> Cancel</button>
     </div>
 
 
@@ -46,7 +48,7 @@
       </div>
       
     <br>
-    <button type="button" onclick="toNext()" id = "nextB">Next</button>
+    <button type="button" onclick="toNext()" id = "nextB">Skip</button>
     
   </body>
 </html>

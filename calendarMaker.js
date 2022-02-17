@@ -7,11 +7,17 @@ page = 0;
 unpressed = true;
 jsonUpload = "";
 jsonDownload = "";
+fileUploaded = false;
+dayArray = []
 setTimeout(() => {  //inital setup, waits 30ms for everything to load first
     
     
     document.getElementById("weeks").style.display = "none"
     document.getElementById("console").style.display = "none"
+    document.getElementById("scheduleIntro").style.display = "none";
+    document.getElementById("schedules").style.display = "none";
+    document.getElementById("scheduleSubmit").style.display = "none";
+    document.getElementById("twitter").style.display = "none"
     
 
 }, 30);
@@ -122,6 +128,17 @@ function submitSchedule()
 function toNext()
 {
     if (page == 0)
+        document.getElementById("scheduleIntro").style.display = "inline";
+        document.getElementById("schedules").style.display = "inline";
+        document.getElementById("scheduleSubmit").style.display = "inline";
+        document.getElementById("fileUpload").style.display = "none";
+        document.getElementById("nextB").innerHTML = "Next"
+        if (fileUploaded)
+            fileParse(jsonUpload, true)
+        document.getElementById("scheduleNum").innerHTML = "Schedule #" + schedulesCreated;
+        console.log(dayArray)
+    }
+    if (page == 1)
     {
         document.getElementById("scheduleIntro").style.display = "none";
         document.getElementById("schedules").style.display = "none";
@@ -130,7 +147,7 @@ function toNext()
         document.getElementById("nextB").innerHTML = "Finish"
         populateWeeks()
     }
-    else if (page == 1)
+    else if (page == 2)
     {
         document.getElementById("weeks").style.display = "none";
         document.getElementById("console").style.display = "inline"
@@ -152,8 +169,15 @@ function populateWeeks()
             var opt = document.createElement("option")
             opt.value = schedulesArray2D[j].scheduleNumber; //value of selection is the schedule #, makes it easier in the long run
             opt.innerText = schedulesArray2D[j].scheduleName;
+            if (dayArray[i-1] == schedulesArray2D[j].scheduleName)
+            {
+                console.log("select")
+                opt.selected = "true";
+            }
+            
             document.getElementById("day"+i).append(opt)
         }
+        document.getElementById("day"+i).selected = dayArray[i];
 
     }
 
@@ -184,11 +208,16 @@ function createObject() // converts array that already exists into a json object
 
 }
 
-// -- File upload -- //
+// -- File upload and download -- //
 
 
 function fileUpload(file)
 {
+    fileUploaded = true;
+    document.getElementById("nextB").innerHTML = "Accept" //changing some values to reflect that a file was uploaded
+    document.getElementById("twitter").style.display = "inline"
+
+//thanks to the internet
     var input = file.files[0]
     //console.log(document.getElementById("test"))
     const reader = new FileReader();
@@ -198,11 +227,61 @@ function fileUpload(file)
         var data = JSON.parse(e.target.result);
 
         jsonUpload = data;
-        console.log(data)
+        console.log(data);
+        fileParse(jsonUpload, false)
     });
 }
 
-// trusting stack overflow... 
+function fileParse(file, accept)
+{
+    for (const key in file) {
+
+        if (file.hasOwnProperty(key)) {
+            if (typeof (file[key] == "object") && typeof (file[key]) != "string") 
+            {
+                if (accept)
+                {
+                    schedulesArray2D.push(file[key])
+                    console.log(schedulesArray2D)
+                    schedulesCreated++;
+                }
+                else{
+
+                    for (const be in file[key])
+                    {
+                        if (be == "scheduleName")
+                        {
+                            var element = document.createElement('h4');
+                            element.innerHTML = "Schedule Name: " + file[key][be];
+                            document.getElementById("fileUpload").append(element)   
+                        }
+                        else if (typeof (file[key][be]) == "object")
+                        {
+                            var element = document.createElement('p');
+                            element.innerHTML = "Period name: " + file[key][be]["periodName"] + " Period Start: " + file[key][be]["periodStart"] + " Period End: " + file[key][be]["periodEnd"];
+                            document.getElementById("fileUpload").append(element)
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (accept)
+                dayArray.push(file[key])
+
+            }
+                
+            
+            //check if it has a tag of schedule something
+    
+        }
+    }
+}
+
+
+
+
+// trusting stack overflow...  // 
 function download(filename, text) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
